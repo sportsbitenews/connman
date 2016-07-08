@@ -50,6 +50,7 @@ In order to compile Connection Manager you need following software packages:
 	- readline (command line client)
 
 To configure run:
+	autoreconf -i
 	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var
 
 Configure automatically searches for all required components and packages.
