@@ -206,8 +206,17 @@ void __connman_tethering_set_enabled(void)
 	}
 
 	index = connman_inet_ifindex(BRIDGE_NAME);
-	dhcp_ippool = __connman_ippool_create(index, 2, 252,
+	
+	int i = 0;
+
+	for(i = 0; i < 7 ; i++){
+		dhcp_ippool = __connman_ippool_create(index, 1, 100, NULL, NULL);
+	}
+	
+	dhcp_ippool = __connman_ippool_create(index, 1, 100,
 						tethering_restart, NULL);
+
+
 	if (!dhcp_ippool) {
 		connman_error("Fail to create IP pool");
 		__connman_bridge_remove(BRIDGE_NAME);
@@ -220,6 +229,10 @@ void __connman_tethering_set_enabled(void)
 	subnet_mask = __connman_ippool_get_subnet_mask(dhcp_ippool);
 	start_ip = __connman_ippool_get_start_ip(dhcp_ippool);
 	end_ip = __connman_ippool_get_end_ip(dhcp_ippool);
+	gateway = "192.168.7.2";
+	subnet_mask  = "255.255.255.0" ;
+	start_ip =  "192.168.7.3" ;
+	end_ip = "192.168.7.4" ;
 
 	err = __connman_bridge_enable(BRIDGE_NAME, gateway,
 			connman_ipaddress_calc_netmask_len(subnet_mask),
